@@ -11,9 +11,23 @@
     </div>
     <div class="container">
       {% include "includes/nav.html" %}
-      {% block content %}
+      {% if session['username'] %}
+        <span class="user">Welcome, {{ session['username'] }}</span>
+      {% endif %}
+      {% with messages = get_flashed_messages(with_categories=true)%}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{category}}">
+              <p>{{message}}</p>
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+      <div class="content">
+        {% block content %}
 
-      {% endblock %}
+        {% endblock %}
+      </div
     </div>
 
     {% include "includes/footer.html" %}
